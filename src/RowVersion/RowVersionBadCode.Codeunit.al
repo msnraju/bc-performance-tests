@@ -1,6 +1,6 @@
 codeunit 50100 "Row Version - Bad Code"
 {
-    procedure TryModifications()
+    procedure ModifyCustomer()
     var
         Customer: Record Customer;
     begin
@@ -10,15 +10,17 @@ codeunit 50100 "Row Version - Bad Code"
         Message('Name: %1, E-Mail: %2', Customer.Name, Customer."E-Mail");
     end;
 
-    local procedure SetName(Cust: Record Customer)
+    local procedure SetName(Customer: Record Customer)
     begin
-        Cust.Name := StrSubstNo('Customer - %1', Format(Random(10000)));
-        Cust.Modify();
+        Customer.Name := StrSubstNo('Customer - %1', Format(Random(10000)));
+        Customer.Modify();
     end;
 
-    local procedure SetEMail(Cust: Record Customer)
+    local procedure SetEMail(Customer: Record Customer)
+    var
+        JObject: JsonObject;
     begin
-        Cust."E-Mail" := StrSubstNo('cust.%1@test.com', Format(Random(10000)));
-        Cust.Modify();
+        Customer."E-Mail" := StrSubstNo('cust.%1@test.com', Format(Random(10000)));
+        Customer.Modify();
     end;
 }
